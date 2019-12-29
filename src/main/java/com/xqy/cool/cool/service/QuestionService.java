@@ -4,6 +4,7 @@ import com.xqy.cool.cool.Mapper.QuestionMapper;
 import com.xqy.cool.cool.Mapper.UserMapper;
 import com.xqy.cool.cool.Model.Question;
 import com.xqy.cool.cool.Model.User;
+import com.xqy.cool.cool.dto.PaginationDTO;
 import com.xqy.cool.cool.dto.QuestionDTO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +26,27 @@ public class QuestionService {
      * 返回所有QuestionDTO
      *
      * @return
+     * @param page
+     * @param size
      */
-    public List<QuestionDTO> list() {
-        List<Question> questions = questionMapper.list();
+    public PaginationDTO list(Integer page, Integer size) {
+
+        //计算页码
+        Integer offset = size*(page - 1);
+
+        PaginationDTO paginationDTO = new PaginationDTO();
+        paginationDTO.setPagination(questionMapper.count(), page, size);
+
+        if (page < 1){
+            page = 1;
+        }
+        if (page > paginationDTO.getTotalPage()){
+            page = paginationDTO.getTotalPage();
+        }
+
+        List<Question> questions = questionMapper.list(offset, size);
         List<QuestionDTO> questionDTOList = new ArrayList<>();
+
         for (Question question : questions) {
             User usr = userMapper.findById(question.getCreator());
             QuestionDTO questionDTO = new QuestionDTO();
@@ -36,6 +54,7 @@ public class QuestionService {
             questionDTO.setUser(usr);
             questionDTOList.add(questionDTO);
         }
-        return questionDTOList;
+        paginationDTO.setQuestions(questionDTOList);
+        return paginationDTO;
     }
 }

@@ -3,6 +3,9 @@ package com.xqy.cool.cool.Mapper;
 import com.xqy.cool.cool.Model.Question;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 @Mapper
 public interface QuestionMapper {
@@ -10,4 +13,7 @@ public interface QuestionMapper {
             "values " +
             "(#{title},#{description},#{gmtCreate},#{gmtModify},#{creator},#{tag})")
     void create(Question question);
+
+    @Select("select * from question")
+    List<Question> list();
 }

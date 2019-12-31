@@ -1,7 +1,7 @@
 package com.xqy.cool.cool.contraller;
 
-import com.xqy.cool.cool.Mapper.UserMapper;
-import com.xqy.cool.cool.Model.User;
+import com.xqy.cool.cool.mapper.UserMapper;
+import com.xqy.cool.cool.model.User;
 import com.xqy.cool.cool.dto.PaginationDTO;
 import com.xqy.cool.cool.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package com.xqy.cool.cool.dto;
 
-import com.xqy.cool.cool.Model.User;
+import com.xqy.cool.cool.model.User;
 import lombok.Data;
 
 /**

@@ -1,7 +1,7 @@
 package com.xqy.cool.cool.contraller;
 
-import com.xqy.cool.cool.Mapper.UserMapper;
-import com.xqy.cool.cool.Model.User;
+import com.xqy.cool.cool.mapper.UserMapper;
+import com.xqy.cool.cool.model.User;
 import com.xqy.cool.cool.dto.AccessTokenDTO;
 import com.xqy.cool.cool.dto.GithubUser;
 import com.xqy.cool.cool.provider.GitHubProvider;

@@ -1,42 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE generatorConfiguration [
-        <!ELEMENT generatorConfiguration (context)*>
-        <!ELEMENT context (plugin|jdbcConnection|javaTypeResolver|javaModelGenerator|sqlMapGenerator|javaClientGenerator|table)*>
-        <!ATTLIST context
-                id CDATA #REQUIRED
-                targetRuntime CDATA #REQUIRED>
-        <!ELEMENT plugin (#PCDATA)>
-        <!ATTLIST plugin
-                type CDATA #REQUIRED>
-        <!ELEMENT jdbcConnection (#PCDATA)>
-        <!ATTLIST jdbcConnection
-                driverClass CDATA #REQUIRED
-                connectionURL CDATA #REQUIRED
-                userId CDATA #REQUIRED
-                password CDATA #REQUIRED>
-        <!ELEMENT javaTypeResolver (property)*>
-        <!ELEMENT property (#PCDATA)>
-        <!ATTLIST property
-                name CDATA #REQUIRED
-                value CDATA #REQUIRED>
-        <!ELEMENT javaModelGenerator (property)*>
-        <!ATTLIST javaModelGenerator
-                targetPackage CDATA #REQUIRED
-                targetProject CDATA #REQUIRED>
-        <!ELEMENT sqlMapGenerator (property)*>
-        <!ATTLIST sqlMapGenerator
-                targetPackage CDATA #REQUIRED
-                targetProject CDATA #REQUIRED>
-        <!ELEMENT javaClientGenerator (property)*>
-        <!ATTLIST javaClientGenerator
-                type CDATA #REQUIRED
-                targetPackage CDATA #REQUIRED
-                targetProject CDATA #REQUIRED>
-        <!ELEMENT table (#PCDATA)>
-        <!ATTLIST table
-                domainObjectName CDATA #REQUIRED
-                tableName CDATA #REQUIRED>
-        ]>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
 
     <context id="DB2Tables" targetRuntime="MyBatis3">
@@ -68,5 +33,6 @@
 
         <table tableName="user" domainObjectName="User"></table>
         <table tableName="question" domainObjectName="Question"></table>
+        <table tableName="comment" domainObjectName="Comment"></table>
     </context>
 </generatorConfiguration>

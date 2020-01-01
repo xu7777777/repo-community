@@ -4,10 +4,10 @@ import com.xqy.cool.cool.dto.PaginationDTO;
 import com.xqy.cool.cool.dto.QuestionDTO;
 import com.xqy.cool.cool.exception.CustomizeErrorCode;
 import com.xqy.cool.cool.exception.CustomizeException;
-import com.xqy.cool.cool.mapper.QuestionExMapper;
 import com.xqy.cool.cool.mapper.QuestionMapper;
 import com.xqy.cool.cool.mapper.UserMapper;
 import com.xqy.cool.cool.model.Question;
+import com.xqy.cool.cool.model.QuestionExample;
 import com.xqy.cool.cool.model.User;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
@@ -25,9 +25,6 @@ public class QuestionService {
 
     @Autowired
     private UserMapper userMapper;
-
-    @Autowired
-    private QuestionExMapper questionExMapper;
 
     /**
      * 返回所有QuestionDTO
@@ -144,16 +141,5 @@ public class QuestionService {
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
         }
-    }
-
-    /**
-     * 累加回复数
-     * @param id
-     */
-    public void incView(Integer id) {//存在并发问题
-        Question question = new Question();
-        question.setId(id);
-        question.setViewCount(1);
-        questionExMapper.incView(question);
     }
 }

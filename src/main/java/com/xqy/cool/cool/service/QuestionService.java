@@ -106,7 +106,7 @@ public class QuestionService {
 
     public QuestionDTO getById(Integer id) {
         Question question = questionMapper.selectByPrimaryKey(id);
-        if (question == null){
+        if (question == null) {
             throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
         }
         QuestionDTO questionDTO = new QuestionDTO();
@@ -137,9 +137,67 @@ public class QuestionService {
             example.createCriteria()
                     .andIdEqualTo(question.getId());
             int updateid = questionMapper.updateByExampleSelective(updateQuestion, example);
-            if (updateid != 1){
+            if (updateid != 1) {
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
         }
+    }
+
+    /**
+     * 删除一个留言
+     *
+     * @param id
+     */
+    public void delete(Integer id) {
+        questionMapper.deleteByPrimaryKey(id);
+    }
+
+    /**
+     * 根据姓名模糊搜索
+     *
+     * @param messageName
+     * @param page
+     * @param size
+     * @return
+     */
+    public PaginationDTO listLikeName(String messageName, Integer page, Integer size) {
+        if ("Search".equals(messageName)) {
+            return list(page, size);
+        }
+        messageName = "%" + messageName + "%";
+        PaginationDTO paginationDTO = new PaginationDTO();
+        QuestionExample questionExample = new QuestionExample();
+        questionExample.createCriteria()
+                .andTitleLike(messageName);
+        Integer totalCount = (int) questionMapper.countByExample(questionExample);
+        Integer totalPage;
+
+        totalPage = totalCount % size == 0 ? totalCount / size : totalCount / size + 1;
+
+        if (page < 1) {
+            page = 1;
+        }
+        if (page > totalPage) {
+            page = totalPage;
+        }
+
+        paginationDTO.setPagination(totalPage, page);
+
+        Integer offset = size * (page - 1);
+        QuestionExample example = new QuestionExample();
+        example.createCriteria()
+                .andTitleLike(messageName);
+        List<Question> questions = questionMapper.selectByExampleWithRowbounds(example, new RowBounds(offset, size));
+        List<QuestionDTO> questionDTOList = new ArrayList<>();
+
+        for (Question question : questions) {
+            User usr = userMapper.selectByPrimaryKey(question.getCreator());
+            QuestionDTO questionDTO = new QuestionDTO();
+            BeanUtils.copyProperties(question, questionDTO);
+            questionDTO.setUser(usr);
+            questionDTOList.add(questionDTO);
+        }
+        paginationDTO.setQuestions(questionDTOList);
+        return paginationDTO;
     }
 }

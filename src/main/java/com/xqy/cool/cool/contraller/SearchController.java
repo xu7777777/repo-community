@@ -6,23 +6,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class IndexController {
-
+public class SearchController {
 
     @Autowired
     private QuestionService questionService;
 
-    @GetMapping("/")
+    @GetMapping("/search")
     public String index(Model model,
                         @RequestParam(name = "page", defaultValue = "1") Integer page,
+                        @RequestParam(name = "messageName", defaultValue = "Search") String messageName,
                         @RequestParam(name = "size", defaultValue = "8") Integer size) {
-        PaginationDTO pagination = questionService.list(page, size);
+        PaginationDTO pagination = questionService.listLikeName(messageName, page, size);
         model.addAttribute("pagination", pagination);
-        return "index";
+        model.addAttribute("messageName", messageName);
+        return "search";
     }
-
 }

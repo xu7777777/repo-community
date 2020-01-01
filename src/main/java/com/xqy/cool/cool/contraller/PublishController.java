@@ -45,7 +45,7 @@ public class PublishController {
             return "publish";
         }
         if (description == null || description == ""){
-            model.addAttribute("error","问题描述不能为空。");
+            model.addAttribute("error","留言内容不能为空。");
             return "publish";
         }
         if (tag == null || tag == ""){
@@ -71,15 +71,22 @@ public class PublishController {
         return "redirect:/";
     }
 
-    @GetMapping("/publish/{id}")
+    @GetMapping("/publish/{operate}/{id}")
     public String edit(@PathVariable(name = "id") Integer id,
+                       @PathVariable(name = "operate") String operate,
                        Model model){
-        QuestionDTO question = questionService.getById(id);
-        model.addAttribute("title", question.getTitle());
-        model.addAttribute("description", question.getDescription());
-        model.addAttribute("tag", question.getTag());
-        model.addAttribute("id", question.getId());
+        if ("edit".equals(operate)){
+            QuestionDTO question = questionService.getById(id);
+            model.addAttribute("title", question.getTitle());
+            model.addAttribute("description", question.getDescription());
+            model.addAttribute("tag", question.getTag());
+            model.addAttribute("id", question.getId());
+            return "publish";
+        }else if ("del".equals(operate)){
+            questionService.delete(id);
+            return "redirect:/profile/questions";
+        }
 
-        return "publish";
+        return null;
     }
 }

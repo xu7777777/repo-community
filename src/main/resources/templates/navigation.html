@@ -11,19 +11,19 @@
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                         data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">社区</span>
+                    <span class="sr-only">留言板</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">社区</a>
+                <a class="navbar-brand" href="/">留言板</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <form class="navbar-form navbar-left">
+                <form class="navbar-form navbar-left" action="/search" method="get">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input type="text" class="form-control" placeholder="Search" name="messageName">
                     </div>
                     <button type="submit" class="btn btn-default">搜索话题</button>
                 </form>
@@ -37,7 +37,7 @@
                             <span th:text="${session.user.getName()}"></span>
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/profile/questions">我的问题</a></li>
+                            <li><a href="/profile/questions">我的留言</a></li>
                             <li><a href="#">个人资料</a></li>
                             <li><a href="/logout">退出登录</a></li>
                         </ul>

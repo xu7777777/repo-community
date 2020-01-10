@@ -4,6 +4,7 @@ import com.xqy.cool.cool.dto.PaginationDTO;
 import com.xqy.cool.cool.dto.QuestionDTO;
 import com.xqy.cool.cool.exception.CustomizeErrorCode;
 import com.xqy.cool.cool.exception.CustomizeException;
+import com.xqy.cool.cool.mapper.QuestionExtMapper;
 import com.xqy.cool.cool.mapper.QuestionMapper;
 import com.xqy.cool.cool.mapper.UserMapper;
 import com.xqy.cool.cool.model.Question;
@@ -22,6 +23,9 @@ public class QuestionService {
 
     @Autowired
     private QuestionMapper questionMapper;
+
+    @Autowired
+    private QuestionExtMapper questionExtMapper;
 
     @Autowired
     private UserMapper userMapper;
@@ -126,6 +130,9 @@ public class QuestionService {
         if (question.getId() == null) {
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModify(question.getGmtCreate());
+            question.setViewCount(0);
+            question.setCommentCount(0);
+            question.setLikeCount(0);
             questionMapper.insert(question);
         } else {
             Question updateQuestion = new Question();
@@ -199,5 +206,15 @@ public class QuestionService {
         }
         paginationDTO.setQuestions(questionDTOList);
         return paginationDTO;
+    }
+
+    /**
+     * add the count of view
+     */
+    public void incView(Integer id) {
+        Question question = new Question();
+        question.setId(id);
+        question.setViewCount(1);
+        questionExtMapper.incView(question);
     }
 }

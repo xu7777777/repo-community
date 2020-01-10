@@ -23,9 +23,6 @@ public class AuthorizeController {
     @Autowired
     private GitHubProvider gitHubProvider;
 
-    @Autowired
-    private UserMapper userMapper;
-
     @Value("${github.client.id}")
     private String clientId;
 

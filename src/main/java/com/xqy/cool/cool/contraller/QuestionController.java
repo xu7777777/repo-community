@@ -33,6 +33,8 @@ public class QuestionController {
         model.addAttribute("question", questionDTO);
 //        model.addAttribute("comments", comments);
 //        model.addAttribute("relatedQuestions", relatedQuestions);
+        //累加阅读数
+        questionService.incView(id);
         return "question";
     }
 }
